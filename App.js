@@ -10,12 +10,13 @@ import React, {Component} from 'react';
 import rootReducer from './reducers';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import { StyleSheet, View} from 'react-native';
 import SignIn from './SignIn';
 import Navigation from './Navigation';
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))
 
 
 export default class App extends Component {
@@ -23,7 +24,7 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <View style={styles.container}>
-          <Navigation />
+          <SignIn />
         </View>
       </Provider>
     );
