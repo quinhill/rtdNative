@@ -7,16 +7,26 @@
  */
 
 import React, {Component} from 'react';
+import rootReducer from './reducers';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
 import { StyleSheet, View} from 'react-native';
-import SignIn from './SignIn.js';
+import SignIn from './SignIn';
+import Navigation from './Navigation';
+
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))
 
 
 export default class App extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <SignIn />
-      </View>
+      <Provider store={store}>
+        <View style={styles.container}>
+          <SignIn />
+        </View>
+      </Provider>
     );
   }
 }

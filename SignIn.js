@@ -6,7 +6,9 @@ import {
   Button,
   StyleSheet
 } from 'react-native';
+import { connect } from 'react-redux';
 import { auth } from './firebase';
+import signInThunk from './thunks/signInThunk';
 
 
 class SignIn extends Component {
@@ -29,7 +31,9 @@ class SignIn extends Component {
     if (!error) {
       try {
         const authUser = await auth.doSignInWithEmailAndPassword(email, password);
-        console.log(authUser.user.uid);
+        const uid = authUser.user.uid;
+        await this.props.signInUser(uid);
+        console.log(this.props.state);
       }
       catch (err) {
         this.setState({ error: err });
@@ -73,6 +77,12 @@ const styles = StyleSheet.create({
   }
 })
 
+export const mapStateToProps = state => ({
+  state
+})
 
+export const mapDispatchToProps = dispatch => ({
+  signInUser: (uid) => dispatch(signInThunk(uid))
+});
 
-export default SignIn;
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
