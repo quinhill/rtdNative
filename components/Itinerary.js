@@ -6,7 +6,7 @@ class ItineraryScreen extends Component {
   render() {
     return (
       <View>
-        <Text>Home</Text>
+        <Text>Itinerary</Text>
         <Button
           title='Go to Home'
           onPress={() => this.props.navigation.navigate('Home')}
@@ -16,6 +16,4 @@ class ItineraryScreen extends Component {
   }
 }
 
-export default createStackNavigator({
-  Itinerary: { screen: ItineraryScreen }
-});
+export default ItineraryScreen;

@@ -1,12 +1,25 @@
 import React, { Component } from 'react';
-import { createStackNavigator } from 'react-navigation';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, Switch } from 'react-native';
 
 class HomeScreen extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      favorites: true
+    }
+  }
+
+  toggleFavorites = (value) => {
+    this.setState({favorites: value})
+  }
+
   render() {
     return (
       <View>
-        <Text>Home</Text>
+        <Switch 
+          onValueChange={this.toggleFavorites}
+          value={this.state.favorites}
+        />
         <Button
           title='Go to Itinerary'
           onPress={() => this.props.navigation.navigate('Itinerary')}
@@ -16,6 +29,4 @@ class HomeScreen extends Component {
   }
 }
 
-export default createStackNavigator({
-  Home: { screen: HomeScreen }
-});
+export default HomeScreen;
