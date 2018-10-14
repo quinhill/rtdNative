@@ -11,4 +11,9 @@ export const hasErrored = (bool) => ({
 export const signIn = (user) => ({
   type: 'SIGN_IN',
   user
-})
+});
+
+export const SignUp = (user) => ({
+  type: 'SIGN_UP',
+  user
+});

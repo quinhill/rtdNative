@@ -9,6 +9,7 @@ import {
 import { connect } from 'react-redux';
 import { auth } from './firebase';
 import signInThunk from './thunks/signInThunk';
+import { signInUrl } from '../urlGenerator';
 
 
 class SignIn extends Component {
@@ -31,9 +32,8 @@ class SignIn extends Component {
     if (!error) {
       try {
         const authUser = await auth.doSignInWithEmailAndPassword(email, password);
-        const uid = authUser.user.uid;
-        await this.props.signInUser(uid);
-        console.log(this.props.state);
+        const url = signInUrl(authUser.user.uid);
+        await this.props.signInUser(url);
       }
       catch (err) {
         this.setState({ error: err });
@@ -63,6 +63,14 @@ class SignIn extends Component {
           onPress={this.handleSubmit}
         >
         </Button>
+        <View>
+          <Text>Don't have an account?</Text>
+          <Button
+            title='Create Account'
+            
+          >
+          </Button>
+        </View>
       </View>
     );
   }
@@ -78,11 +86,11 @@ const styles = StyleSheet.create({
 })
 
 export const mapStateToProps = state => ({
-  state
-})
+  user: state.user
+});
 
 export const mapDispatchToProps = dispatch => ({
-  signInUser: (uid) => dispatch(signInThunk(uid))
+  signInUser: (url) => dispatch(signInThunk(url))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

@@ -1,7 +1,8 @@
 const user = (state = {}, action) => {
   switch (action.type) {
   case 'SIGN_IN':
-    console.log(action.user)
+    return action.user;
+  case 'SIGN_UP':
     return action.user;
   default:
     return state;

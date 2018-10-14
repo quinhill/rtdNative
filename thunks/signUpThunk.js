@@ -1,9 +1,13 @@
-import { isLoading, hasErrored, signIn } from '../actions';
+import { isLoading, hasErrored, signUp } from '../actions';
 
-export const signInThunk = (url) => {
+export const signInThunk = (signUpObj) => {
+  const {
+    url,
+    options
+  } = signUpObj;
   return (dispatch) => {
     dispatch(isLoading(true));
-    fetch(url)
+    fetch(url, options)
       .then(response => {
         if (!response.ok) {
           throw Error();
@@ -12,9 +16,9 @@ export const signInThunk = (url) => {
         return response;
       })
       .then(response => response.json())
-      .then(user => dispatch(signIn(user)))
+      .then(user => dispatch(signUp(user)))
       .catch(() => dispatch(hasErrored(true)));
   };
 };
 
-export default signInThunk;
+export default signUpThunk;
