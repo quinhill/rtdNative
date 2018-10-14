@@ -7,11 +7,6 @@
  */
 
 import React, {Component} from 'react';
-// import rootReducer from '../reducers';
-// import { Provider } from 'react-redux';
-// import { createStore, applyMiddleware } from 'redux';
-// import { composeWithDevTools } from 'redux-devtools-extension';
-// import thunk from 'redux-thunk';
 import { StyleSheet } from 'react-native';
 // import SignIn from './SignIn';
 // import SignUp from './SignUp';
@@ -19,15 +14,11 @@ import ItineraryScreen from './Itinerary';
 import HomeScreen from './Home';
 import { createStackNavigator } from 'react-navigation';
 
-// const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))
-
 
 export default class App extends Component {
   render() {
     return (
-      // <Provider store={store}>
-        <RootStack />
-      // </Provider>
+      <RootStack />
     );
   }
 }
