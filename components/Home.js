@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Button, Switch } from 'react-native';
+import Search from './Search';
 
 class HomeScreen extends Component {
   constructor(props) {
@@ -16,14 +17,17 @@ class HomeScreen extends Component {
   render() {
     return (
       <View>
-        <Switch 
+        <Search />
+        {/* <Switch 
           onValueChange={this.toggleFavorites}
           value={this.state.favorites}
-        />
-        <Button
+        /> */}
+        {/* <Button
           title='Go to Itinerary'
-          onPress={() => this.props.navigation.navigate('Itinerary')}
-        />
+          onPress={
+            () => this.props.navigation.navigate('Itinerary')
+          } */}
+        {/* /> */}
       </View>
     );
   }
