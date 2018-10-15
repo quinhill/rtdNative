@@ -1,50 +1,54 @@
 import React, { Component } from 'react';
-import { View, TextInput, ScrollView, ActivityIndicator } from 'react-native';
-import { GoogleAutoComplete } from 'react-native-google-autocomplete';
-import LocationItem from './LocationItem';
+import { autocomplete } from '../autocomplete';
+import { View, TextInput, ScrollView, TouchableHighlight, Text } from 'react-native';
 
-import { GoogleKey } from '../APIkey';
+class StartAddress extends Component {
+  constructor() {
+    super()
+    this.state = {
+      address: '',
+      predictions: [],
+    }
+  }
 
-export default class StartAddress extends Component {
+  handleChange = async (address) => {
+    this.setState({address})
+    const result = await autocomplete(address)
+    const predictions = result.predictions.map(place => (
+      place.description
+    ))
+    this.setState({predictions: [...predictions]})
+  }
+
+  handlePress = (place) => {
+    this.setState({address: place})
+    this.setState({predictions: []})
+  }
+
+
   render() {
     return (
       <View>
-        <GoogleAutoComplete
-          apiKey={GoogleKey}
-          radius={5000}
-          components='country:usa'
-        >
-        {(
-          { 
-            handleTextChange, 
-            locationResults, 
-            fetchDetails,
-            isSearching 
+        <TextInput 
+          onChangeText={
+            (address) => this.handleChange({address})
           }
-          ) => (
-          <React.Fragment>
-            {console.log(locationResults)}
-            <View>
-              <TextInput
-                placeholder='Search'
-                onChangeText={handleTextChange}
-              />
-            </View>
-            {isSearching && <ActivityIndicator size='large' />}
-            <ScrollView>
-              {locationResults.map(location => (
-                <LocationItem 
-                  {...location}
-                  fetchDetails={fetchDetails}
-                  key={location.id}
-                />
-              ))}
-            </ScrollView>
-          </React.Fragment>
-        )}
-
-        </GoogleAutoComplete>
+          value={this.state.address}
+          placeholder='search'
+        />
+        <ScrollView>
+          {this.state.predictions.map((place, index) => (
+            <TouchableHighlight
+              key={index}
+              onPress={() => this.handlePress(place)}
+            >
+              <Text>{place}</Text>
+            </TouchableHighlight>
+          ))}
+        </ScrollView>
       </View>
     )
   }
 }
+
+export default StartAddress;
